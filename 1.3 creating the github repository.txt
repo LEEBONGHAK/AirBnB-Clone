@@ -1,0 +1,9 @@
+git init
+
+git remote add origin (올릴 주소)
+
+git add .
+
+git commit -m "commit"
+
+git push origin main

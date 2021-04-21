@@ -1,0 +1,20 @@
+pipenv을 설치해야하는 이유
+
+* NodeJS를 알 때 설명
+파이썬에는 공식 npm(패키지 관리가)가 없음
+파이썬을 다운 받으면 pip가 따라 오는데, pip는 npm 역할을 수행.
+그러나 pip는 npm과 다르게 모든 것을 전역으로(globally) 설치함. 이것은 좋은 것이 아님. 즉, 이건 'npm install -g' 또는 'yarn global add'하는 것과 같음
+우리는 React든 Express든 global로 설치되는 것을 원하지 않고 오직 해당 프로젝트에만 설치하고 싶어하지만, pip는 무조건 global로 설치를 함
+따라서 pipenv를 설치해야함. pipenv는 파이썬을 위한 npm + package.json 같은 것 (생성되는 Pipfile = package.json)
+pipenv를 쓰면 Django를 해당 프로젝트 환경에만 설치할 수 있음
+결론 : Django를 사용할 때 pip가 아닌 pipenv를 사용해라!!
+
+
+* NodeJS를 모를 때 설명
+pip(Package Installer for Python)는 기본적으로 인터넷으로부터 패키지를 다운받는 수단
+문제는 시스템에 global하게 설치를 진행함 -> 어느 곳에서나 Django에 접근할 수 있게 됨
+그럴 경우 Django를 업데이트하게 되면 이전 버전을 사용해서 개발한 다른 프로젝트들이 망가짐 (버전이 달라져서)
+즉, 서로 다른 버전의 Django를 사용할 수 없음 -> pip로 global하게 설치했기 때문에
+이러한 이유로 pip로 globally 인스톨하는 것은 좋은 생각이 아니다
+우리가 원하는 건 버블(bubble) 비슷한 걸 만드는 것! -> 컴퓨터에 설치되어 있지만 각각 분리되어 있는 것 (같은 곳에 있지만 버블에 갇혀 있는 상태)
+global로 설치하는 것은 좋지 않다.

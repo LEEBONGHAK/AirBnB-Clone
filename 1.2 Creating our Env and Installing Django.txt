@@ -1,0 +1,13 @@
+프로젝트를 위한 폴더를 만들어 들어가서
+
+pipenv --three
+=> Pipfile 생성(Package.json 같은 파일)
+
+pipenv shell
+=> 버블(가상환경) 안으로 들어가기 위해
+
+pipenv install Django==2.2.5
+=> Django 설치
+
+django-admin
+=> 버블에 잘 설치된 건지 확인
