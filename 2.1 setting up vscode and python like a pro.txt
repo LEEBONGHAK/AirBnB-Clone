@@ -1,0 +1,30 @@
+파이썬은 compiled 언어가 아님
+compiled 언어는 compiler가 있어서 프로그램이 시작되기 이전에 에러를 잡아줌
+그러나 파이썬은 그런게 없음(runtime 언어) -> 에러가 있으면 무너져 내림
+
+Linter
+- 기본적으로 코드를 보면서 에러가 생길 부분을 미리 감지하는 것
+- 적어도 코드를 실행하기 전에 틀린 부분을 알려주는 것
+- 파이썬에서 널리 쓰이는 관습도 준수하려고 함
+- python pep (파이썬 코드를 쓸 때의 권장사항 같은 것) 참고
+- 강의에서 사용되는 Linter는 'flake8' / 'pylint'도 괜찮음
+
+[flak8 설치]
+source (설치할 곳)
+pipenv install flake --dev
+
+Pipfile에서
+[package]
+- 웹 애플리케이션이 동작할 때 필요한 패키지
+
+[dev-package]
+- 개발자가 개발할 때만 필요한 패키지
+
+
+
+Formatter
+- 코드를 Format 해주는 것
+- 강의에서 추천하는 Formatter는 black
+
+[black 설치]
+pipenv install black --dev --pre
