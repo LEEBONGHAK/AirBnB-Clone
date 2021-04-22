@@ -1,0 +1,23 @@
+control(command) + funtion 클릭 => 해당 function 이 정의된 부분으로 갈 수 있음 (소스를 볼 수 있다.)
+
+python manage.py runserver
+=> 웹사이트의 서버 구동
+=> 파일이 수정될 때 자동으로 재시작
+=> control + c : 서버 종료
+=> 반환하지 않고 멋대로 사용한 포트 죽이기 : sudo lsof -t -i tcp:8000 | xargs kill -9
+
+db.sqlite3
+- 데이터베이스
+- 최종 데이터베이스는 아니고 개발용 즉, 개발하는 중에 사용하게 될 데이터베이스
+
+python manage.py migrate
+이후
+python manage.py runserver
+=> admin을 할 때 로그인 페이지가 나옴
+
+
+[관리자 패널에 로그인하기]
+python manage.py createsuperuser
+- 관리자 계정 생성
+
+서버 실행 후 관리자 계정으로 admin에 접속 => 관리자 패널 사용 (Django에서 자동으로 생성된 것!!!)
