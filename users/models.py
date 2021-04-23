@@ -27,20 +27,14 @@ class User(AbstractUser):
 
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_KRW, "KRW"))
 
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(blank=True)
     # null은 데이터베이스에서 사용되는 것 / blank는 form에서 사용되는 빈값
-    gender = models.CharField(
-        choices=GENDER_CHOICES, max_length=10, null=True, blank=True
-    )
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     # CharField(max_length, default) : argumentrk가 하나만 필요 => 글자 수 제한이 있는 1줄 짜리 field
     # choices를 주어 선택하게 만들 수 도 있음 이는 form에 변화를 준 것이기 때문에 데이터베이스에 영향이 가지 않는다.
     bio = models.TextField(default="", blank=True)
     # TextField : 글자 수 제한이 없는 여러 줄을 쓸 수 있는 field
-    birthdate = models.DateField(null=True)
-    langauge = models.CharField(
-        choices=LANGAUGE_CHOICES, max_length=2, null=True, blank=True
-    )
-    currency = models.CharField(
-        choices=CURRENCY_CHOICES, max_length=3, null=True, blank=True
-    )
+    birthdate = models.DateField(blank=True, null=True)
+    langauge = models.CharField(choices=LANGAUGE_CHOICES, max_length=2, blank=True)
+    currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True)
     superhost = models.BooleanField(default=False)
