@@ -1,0 +1,1 @@
+Django를 시작하게 해주는 command => 'django-admin startapp (복수형(필수) application name)'
