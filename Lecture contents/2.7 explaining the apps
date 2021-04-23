@@ -1,0 +1,20 @@
+장고를 이용해 즉, 'django-admin startapp (application name)' 을 통해 생성된 파일들은 not optional, 변경할 수 없음
+library가 아닌 framework를 사용하고 있는 것이기 때문에 파일 이름을 절대 변경해서는 안된다(추가는 가능) => Django는 framework
+장고가 스스로 생성하는 파일의 이름은 건드리지 않는다!!
+
+framework와 library의 차이
+- framework는 framework의 룰에 따라 사용해야함
+- library의 경우 그저 뭔가를 build하기 위해 사용하는 것 -> 마음껏 변경 가능
+
+
+application이 어떻게 작동하는가?
+- admin.py에 넣는 것은 admin 패널에 반영됨
+- apps.py은 그냥 configuration 파일
+- models.py에서 models는 그냥 data 즉, 여기에서 우기가 원하는 데이터베이스가 어떻게 생겼는지에 대해서 설명해 줘야함 => data를 변경하는 것
+- tests.py는 테스트하는 파일
+- views.py가 사용자들이 보게 될 것임. 여기에 html을 render(보여주는)하는 function을 넣을 것임. 
+  여기에 function들을 넣고 그 function은 form을 보여주고, upload 그리고 view가 없는 모든 것들을 처리하게 될 것임
+- config 폴더에 urls.py는 웹사이트의 url을 컨트롤. 만약 다른 url을 만들고 싶으면 여기에 넣어야 한다. (ex. blog/ url을 만들고 싶다면 path('blog/') 추가)
+  강의에서 모든 url을 config의 urls.py에 넣지 않을 것임 => 많은 url을 넣으면 config의 urls.py가 너무 커지게 될 것이기 때문에
+  해결하기 위해 application안에 새로운 파일인 urls.py를 추가하여 config의 urls.py에 가서 생성한 urls.py를 import
+
