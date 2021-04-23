@@ -1,0 +1,25 @@
+'python manage.py migrate' 없이 'python manage.py runserver' 를 실행했을 경우 
+=> 17 unapplied migration 이라는 에러 메세지 / 'db.sqlite3' 파일 생성됨 (아무 것도 없는)
+
+장고 코드를 사용해서 users, admin, auth, sessions 등등 다양한 것들을 저장할 것임 (이미 장고에 포함되어 있으며 python manage.py migrate을 통해 적용)
+
+SQL 데이터 베이스는 아주 이해하기 쉽다.
+- SQL 데이터베이스는 엑셀처럼 생김
+- SQL 데이터베이스는 가장 유명하고 많이 사용되고 있음
+- 다양한 종류가 존재
+(ex. SQLite3 : 주로 테스트를 할 때 또는 작은 프로젝트에서 사용 / PostgreSQL : 더 전문적이고 백업 기능과 같은 것을 제공 / MySQL : 근본 SQL(Structured Query Language))
+
+두가지 선택지
+1. SQL을 배워서 데이터베이스에 해당 SQL 명령문을 사용 -> SQL 데이터베이스와 연동되는 어떤 프로그래밍 언어 또는 운영체제이든지 반드시 데이터를 어떻게 저장할지를 알려줘야함
+2. 장고의 migration system 사용
+
+migration이란?
+- 기본적으로 뭔가를 다른쪽으로 보내는 것
+- 데이터베이스의 경우 하나의 상태에서 다른 상태로, 다른 데이터 유형으로 바꾸는 것
+- 데이터의 유형이 변경될 때마다 migrate가 필요
+
+
+만약 'python manage.py makemigrations' 입력하면 장고는 우리의 데이터 models을 확인하고 migration 파일을 생성
+(데이터 유형이 바뀌면 migration을 생성하고 해당 migration을 적용함)
+
+앞으로 models을 작성하게 되면 variables를 수정해야 하기 때문에 migration에 대해 다룰 것임!
