@@ -45,6 +45,8 @@ PROJECT_APPS = [
     "rooms.apps.RoomsConfig",
 ]
 
+THIRD_PARTY_APPS = ["django-countries"]
+
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
 MIDDLEWARE = [

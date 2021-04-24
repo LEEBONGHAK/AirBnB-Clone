@@ -7,8 +7,10 @@ class TimeStampdModel(models.Model):
 
     """ Time Stamped Model """
 
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    # auto_now: 값이 True일 경우 필드가 model을 save할 때 date랑 time을 기록
+    # auto_now_add: 값이 True일 경우 model을 생성할 때마다 수시로 업데이트 됨
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     # 이 모델이 데이터베이스에 들어가지 않게 하기 위해서
     class Meta:
