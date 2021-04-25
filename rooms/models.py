@@ -20,6 +20,29 @@ class AbstractItem(core_models.TimeStampdModel):
 
 class RoomType(AbstractItem):
 
+    """ RoomType Object Definition """
+
+    pass
+
+
+class Amenity(AbstractItem):
+
+    """ Amenity Object Definition """
+
+    pass
+
+
+class Facility(AbstractItem):
+
+    """ Facility Model Definition """
+
+    pass
+
+
+class HouseRule(AbstractItem):
+
+    """ HouseRule Model Definition """
+
     pass
 
 
@@ -45,9 +68,14 @@ class Room(core_models.TimeStampdModel):
     instant_book = models.BooleanField(default=False)
     # ForeignKey : model 끼리 이어주는 방법
     # 일대다 관계를 만들어 냄
+    # on_delete : 만약 User가 삭제(on_delete)되었다면 장고에게 room으로 무엇을 할건지 행동 지정 / 오직 Foreign key에만 해당
+    # CASCADE : 폭포수 효과 / 제일 위에서 어떤 일이 발생하고 그것이 아래에 모든 영향을 주는 것
     host = models.ForeignKey(user_models.User, on_delete=models.CASCADE)
+    room_type = models.ForeignKey(RoomType, on_delete=models.SET_NULL, null=True)
     # 다대다 관계를 가지고 있음
-    roomtype = models.ManyToManyField(RoomType, blank=True)
+    amenities = models.ManyToManyField(Amenity)
+    facilities = models.ManyToManyField(Facility)
+    house_rules = models.ManyToManyField(HouseRule)
 
     def __str__(self):
         return self.name
