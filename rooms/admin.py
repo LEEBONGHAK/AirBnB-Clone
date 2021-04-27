@@ -45,7 +45,11 @@ class RoomAdmin(admin.ModelAdmin):
         "check_in",
         "check_out",
         "instant_book",
+        "count_amenities",
     )
+
+    # 여러가지 것들을 기준으로 정렬할 수 있음
+    ordering = ("name", "price", "bedrooms")
 
     list_filter = (
         "instant_book",
@@ -69,6 +73,13 @@ class RoomAdmin(admin.ModelAdmin):
         "facilities",
         "house_rules",
     )
+
+    # self : RoomAdmin / object : 현재 row
+    def count_amenities(self, obj):
+        print(obj.amenities.all())
+        return "Potato"
+
+    count_amenities.short_description = "hello sexy!"
 
 
 @admin.register(models.Photo)
