@@ -15,6 +15,24 @@ class RoomAdmin(admin.ModelAdmin):
 
     """ Room Admin Definition """
 
+    fieldsets = (
+        (
+            "Basic Info",
+            {"fields": ("name", "description", "country", "address", "price")},
+        ),
+        ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
+        ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
+        (
+            "More About the Space",
+            {
+                # fieldset을 접었다 필 수 있는 기능
+                "classes": ("collapse",),
+                "fields": ("amenities", "facilities", "house_rules"),
+            },
+        ),
+        ("Last Details", {"fields": ("host",)}),
+    )
+
     list_display = (
         "name",
         "country",
@@ -25,21 +43,31 @@ class RoomAdmin(admin.ModelAdmin):
         "bedrooms",
         "baths",
         "check_in",
-        "Check_out",
+        "check_out",
         "instant_book",
     )
 
     list_filter = (
         "instant_book",
-        "city",
+        "host__superhost",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
         "country",
     )
 
     # default : icontains (insensitive 포함 => 대소문자 구분 x)
-    # ^ : startswith 등등 많음 => 장고 문서 참조
+    # ^ : startswith / = : inexact 등등 많음 => 장고 문서 참조
     search_fields = (
-        "^city",
-        "host__username",
+        "=city",
+        "^host__username",
+    )
+
+    filter_horizontal = (
+        "amenities",
+        "facilities",
+        "house_rules",
     )
 
 

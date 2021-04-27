@@ -80,7 +80,7 @@ class Room(core_models.TimeStampdModel):
     bedrooms = models.IntegerField()
     baths = models.IntegerField()
     check_in = models.TimeField()
-    Check_out = models.TimeField()
+    check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
     # ForeignKey : model 끼리 이어주는 방법
     # 일대다 관계를 만들어 냄
