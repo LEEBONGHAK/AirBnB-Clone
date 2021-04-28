@@ -1,0 +1,11 @@
+_set 이름 바꾸기
+-> 해당 foreign key에 related_name="원하는 이름" 추가 후 migrate
+-> 예를 들어 user가 어떻게 우리를 찾기 원하는 지 지정하는 것
+
+
+many to many fields
+ - set 같은 것이 아님
+ - 그냥 many to many 관계의 field 이름을 사용하면 됨
+
+
+models이 단지 admin에서 보는 것이 아니라 models이 건드리고, 수정할 수 있는 code, objects 에 살고 있음!!!
