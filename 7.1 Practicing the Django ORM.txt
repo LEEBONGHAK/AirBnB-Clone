@@ -1,6 +1,7 @@
 _set 이름 바꾸기
 -> 해당 foreign key에 related_name="원하는 이름" 추가 후 migrate
 -> 예를 들어 user가 어떻게 우리를 찾기 원하는 지 지정하는 것
+-> 그 대상을 위한 것
 
 
 many to many fields
