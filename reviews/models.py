@@ -14,8 +14,12 @@ class Review(core_models.TimeStampdModel):
     location = models.IntegerField()
     check_in = models.IntegerField()
     value = models.IntegerField()
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    room = models.ForeignKey("rooms.Room", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "users.User", related_name="reviews", on_delete=models.CASCADE
+    )
+    room = models.ForeignKey(
+        "rooms.Room", related_name="reviews", on_delete=models.CASCADE
+    )
 
     # 연결된 object에서 value값을 얻을 수 있음
     def __str__(self):
@@ -24,3 +28,17 @@ class Review(core_models.TimeStampdModel):
         # return self.room.name
         # return self.room.host.username
         return f"{self.review} - {self.room}"
+
+    def rating_average(self):
+        avg = (
+            self.accuracy
+            + self.communication
+            + self.cleanlines
+            + self.location
+            + self.check_in
+            + self.value
+        ) / 6
+
+        return round(avg, 2)
+
+    rating_average.short_description = "Avg."

@@ -89,7 +89,9 @@ class Room(core_models.TimeStampdModel):
     host = models.ForeignKey(
         "users.User", related_name="rooms", on_delete=models.CASCADE
     )
-    room_type = models.ForeignKey("RoomType", related_name="rooms", on_delete=models.SET_NULL, null=True)
+    room_type = models.ForeignKey(
+        "RoomType", related_name="rooms", on_delete=models.SET_NULL, null=True
+    )
     # 다대다 관계를 가지고 있음
     amenities = models.ManyToManyField("Amenity", related_name="rooms", blank=True)
     facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
@@ -97,3 +99,11 @@ class Room(core_models.TimeStampdModel):
 
     def __str__(self):
         return self.name
+
+    def total_rating(self):
+        all_reviews = self.reviews.all()
+        all_ratings = []
+        for review in all_reviews:
+            all_ratings.append(review.rating_average())
+
+        return 0
