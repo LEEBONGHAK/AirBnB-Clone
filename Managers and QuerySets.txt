@@ -1,0 +1,57 @@
+model은 필드들을 가지고, 그걸들이 형식과 DB에 의미있는 뭔가임
+
+만약 코드를 가지고 object에 접근하려고 시도하면 object가 어떤 방식으로 수행되는지?
+장고 설정과 장고 모델들을 상ㅇ해서 프로젝트와 소통하고 싶다면
+=> 'python manange.py shell'
+
+users 모델 속 User 클래스에 접근하기
+=> 'from users.models import User'
+
+vars
+=> __dict__, dictionary 또는 클래스 리스트 안의 나타내는 것을 리턴
+
+dir
+=> 클래스 안의 names 리스트들을 리턴
+
+cf) ctrl + L = clear in console
+
+'vars(User)'로 살펴보면
+ - 우리가 생성하지 않은 많은 것들, 무료로 가져올 수 있는 많은 것들 존재 
+ (AbstractUser을 사용했고, AbstractUser는 AbstractBasicUser을 사용하고, AbstractBasicUser는 model을 사용하기 때문에)
+ - 그 중 mananger 존재
+
+'User.objects'
+=> User의 mananger을 볼 수 있음
+=> mananger는 파이썬을 이용해서, SQL을 쓰지 않고 DB로부터 elements를 가져오게 해주는 것
+=> 데이터 모델을 생성하기만 하면, 장고가 자동으로  database-abstraction API를 부여 
+   (objects를 생성하고, 검색하고, 업데이트하고, 삭제할 수 있게 해주는 API)
+
+ex) 모든 users을 얻고 싶으면, 'User.objects.all()' => QuerySet으로 리턴
+
+* QuerySet => DB로 부터 온 장고 object 리스트 
+(장고 QuerySet API 문서에서 다양한 것들을 할 수 있는 방법이 나와있음)
+
+mananger로 할 수 있는 예
+1)
+all_user = User.objects.all()
+all_user.filter(superhost=True)
+-> superhost인 유저 필터
+
+2)
+itnico = User.objects.get(username="hello") -> 유저이름이 hello가 itnico에 배정(변수화)
+
+
+
+model이 code를 사용해서 호출 됐을때, model이 어떻게 보이는지?
+'dir(itnco)' => 생성된 field와 user에 foreignkey를 가지는 것을 볼 수 있음(_set)
+ - 이 경우 foreignkey로 연결되어 있는 room_set, message_set, list_set, review_set 등이 존재
+
+'itnico.room_set'
+ - create_reverse_many_to_one_manager 표시
+ - 어드민 패널에서는 rooms가 users를 가리켜 users에 대한 정보가 있고, users는 rooms를 가리키지 않아 정보가 없지만
+   코드 상에서는 정보가 있음 -> _set 
+ - 만약 foreign key를 element로 가리키면 그 element 또한 foreign key에 접근할 수 있음(중요!!!)
+   ex) user model을 생성하고 video model을 생성하고 video model은 user foreign key를 가질 때, user 역시 생성한 모든 videos에 접근할 수 있다.
+
+=> 'itnico.room_set.all()'에서 확인할 수 있듯 users에 _set을 생성해 주지 않았지만 users가 rooms에 접근할 수 있다.
+   (장고가 자동으로 생성한 _set 덕분에!!)
