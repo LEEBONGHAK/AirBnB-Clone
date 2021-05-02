@@ -135,3 +135,7 @@ STATIC_URL = "/static/"
 
 
 AUTH_USER_MODEL = "users.User"
+
+# 장고에게 어디에 업로드한 파일들을 써야할 지 말해주는 곳 => 절대 파일 경로 지정해주어야 함
+# (이미 BASE_DIR을 위한 절대 경로 패스를 가지고 있음 => join을 통해 원하는 절대경로 지정)
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")

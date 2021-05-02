@@ -27,7 +27,7 @@ class User(AbstractUser):
 
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_KRW, "KRW"))
 
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(upload_to="avatars", blank=True)
     # null은 데이터베이스에서 사용되는 것 / blank는 form에서 사용되는 빈값
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     # CharField(max_length, default) : argumentrk가 하나만 필요 => 글자 수 제한이 있는 1줄 짜리 field

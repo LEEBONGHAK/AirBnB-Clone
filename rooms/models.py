@@ -55,7 +55,8 @@ class Photo(core_models.TimeStampdModel):
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    # upload_to="" : 사진이 있는 폴더 안의 어떤 폴더에다가 photo를 업로드 할 건지 말해주는 것
+    file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
