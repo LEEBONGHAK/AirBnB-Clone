@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "yn0^c1hz(+b+3c&ju3go780wtcxt=+wsr2z+=)hs177-=s)5n&"
 
+# 프로덕션인지 개발인지 감지할 수 있는 것
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -139,3 +140,9 @@ AUTH_USER_MODEL = "users.User"
 # 장고에게 어디에 업로드한 파일들을 써야할 지 말해주는 곳 => 절대 파일 경로 지정해주어야 함
 # (이미 BASE_DIR을 위한 절대 경로 패스를 가지고 있음 => join을 통해 원하는 절대경로 지정)
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+# url을 컴퓨터 안의 폴더와 연결 시키기
+# url이 디렉토리명과 같을 필요는 없음
+# 디렉토리로부터 뭔가를 가져오고 싶다면 디렉토리의 하위 디렉토리로 갈 수 있게 설정 => config의 url.py에 추가!!!
+# 앞에 '/'을 추가해 주면 상대 경로에서 절대 경로로 변경
+MEDIA_URL = "/media/"
