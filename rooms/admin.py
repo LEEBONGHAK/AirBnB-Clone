@@ -1,4 +1,6 @@
+from os import get_terminal_size
 from django.contrib import admin
+from django.utils.html import mark_safe
 from . import models
 
 # Register your models here.
@@ -95,4 +97,13 @@ class PhotoAdmin(admin.ModelAdmin):
 
     """ Photo Admin Definition """
 
-    pass
+    list_display = (
+        "__str__",
+        "get_thumbnail",
+    )
+
+    def get_thumbnail(self, obj):
+        # 장고 자체가 가지고 있는 보안으로 인해 입력된 값을 방지하는 것을 허용
+        return mark_safe(f'<img width=50px src="{obj.file.url}" />')
+
+    get_thumbnail.short_description = "Thumbnail"
