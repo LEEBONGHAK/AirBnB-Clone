@@ -1,6 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from . import models
+from rooms import models as rooms__models
+
+
+class RoomInline(admin.TabularInline):
+
+    model = rooms__models.Room
+
 
 # Register your models here.
 # admin 패널에서 User을 보고 싶어 User을 컨트롤한 클래스가 아래가 될 거야라는 의미
@@ -8,6 +15,8 @@ from . import models
 class CustomUserAdmin(UserAdmin):
 
     """ Custom User Admin """
+
+    inlines = (RoomInline,)
 
     fieldsets = UserAdmin.fieldsets + (
         (

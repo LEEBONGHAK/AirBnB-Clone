@@ -1,5 +1,6 @@
 from os import get_terminal_size
 from django.contrib import admin
+from django.contrib.admin.options import InlineModelAdmin
 from django.utils.html import mark_safe
 from . import models
 
@@ -18,10 +19,19 @@ class ItemAdmin(admin.ModelAdmin):
         return obj.rooms.count()
 
 
+# InlineModelAdmin : admin 안에 또 다른 admin을 넣는 방법
+# 'TabularInline'을 사용하거나 'StackedInline'을 사용 => 보이는 방식 차이
+class PhotoInline(admin.TabularInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
     """ Room Admin Definition """
+
+    inlines = (PhotoInline,)
 
     fieldsets = (
         (
@@ -83,6 +93,10 @@ class RoomAdmin(admin.ModelAdmin):
         "facilities",
         "house_rules",
     )
+
+    # foreign key를 좀 더 나은 방법으로 찾을 수 있게 id로 나타냄
+    # 데이터가 엄청 많을 때 유용함
+    raw_id_fields = ("host",)
 
     # self : RoomAdmin / object : 현재 row
     def count_amenities(self, obj):
