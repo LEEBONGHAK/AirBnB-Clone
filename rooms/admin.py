@@ -36,7 +36,7 @@ class RoomAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price")},
+            {"fields": ("name", "description", "country", "city", "address", "price")},
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
@@ -97,6 +97,11 @@ class RoomAdmin(admin.ModelAdmin):
     # foreign key를 좀 더 나은 방법으로 찾을 수 있게 id로 나타냄
     # 데이터가 엄청 많을 때 유용함
     raw_id_fields = ("host",)
+
+    # admin에서만 적용되는 save
+    # def save_model(self, request, obj, form, change):
+    #     print(obj, change, form)
+    #     super().save_model(request, obj, form, change)
 
     # self : RoomAdmin / object : 현재 row
     def count_amenities(self, obj):
