@@ -1,0 +1,27 @@
+class Dog():
+    # str() method처럼 파이썬에서 클래스마다 init() method 사용 가능
+    def __init__(self):
+        print("woof woof")
+
+    def pee(self):
+        print("I will pee")
+
+
+class Puppy(Dog):
+    def pee(self):
+        print("go to the park")
+        super().pee()
+
+
+# woof woof 출력
+pug = Dog()
+
+# woof woof 출력
+p = Puppy()
+
+# I will pee 가 아닌 go to the park 출력 => super()을 이용해 부모 class의 내용을 출력
+p.pee()
+
+
+method => class 안에 있는 function 
+super() => 부모 class 접근하여 그 곳에 선언된 내용을 실행
