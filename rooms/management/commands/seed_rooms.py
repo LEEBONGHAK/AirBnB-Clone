@@ -26,6 +26,9 @@ class Command(BaseCommand):
         # 유저를 데이터베이스에서 가져오기 (데이터베이스가 크다면 .all()은 권장되지 않음)
         all_users = users_models.User.objects.all()
         room_types = rooms_models.RoomType.objects.all()
+        amenities = rooms_models.Amenity.objects.all()
+        facilities = rooms_models.Facility.objects.all()
+        rules = rooms_models.HouseRule.objects.all()
         seeder.add_entity(
             rooms_models.Room,
             number,
@@ -49,10 +52,24 @@ class Command(BaseCommand):
             # primary ket로 그 room을 찾기
             room = rooms_models.Room.objects.get(pk=pk)
             # 루프를 돌면서 사진을 만들면서 file을 부여
-            for i in range(3, random.randint(10, 17)):
+            for i in range(3, random.randint(10, 30)):
                 rooms_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
                     room=room,
                     file=f"room_photos/{random.randint(1, 31)}.webp",
                 )
+            # 다대다 필드 관리
+            for a in amenities:
+                magic_num = random.randint(0, 15)
+                if magic_num % 2 == 0:
+                    # 다대다 필드에서 어떤 것을 추가하는 방법
+                    room.amenities.add(a)
+            for f in facilities:
+                magic_num = random.randint(0, 15)
+                if magic_num % 2 == 0:
+                    room.facilities.add(f)
+            for r in rules:
+                magic_num = random.randint(0, 15)
+                if magic_num % 2 == 0:
+                    room.house_rules.add(r)
         self.stdout.write(self.style.SUCCESS(f"{number} rooms created!"))
