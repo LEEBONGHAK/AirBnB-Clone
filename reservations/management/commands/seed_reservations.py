@@ -1,13 +1,14 @@
 import random
+from datetime import date, datetime, time, timedelta
 from django.contrib.auth.models import User
-from django.contrib.admin.utils import flatten
 from django.core.management.base import BaseCommand
+from django.contrib.admin.utils import flatten
 from django_seed import Seed
-from lists import models as lists_models
+from reservations import models as reservations_models
 from users import models as users_models
 from rooms import models as rooms_models
 
-NAME = "lists"
+NAME = "reservations"
 
 
 class Command(BaseCommand):
@@ -26,21 +27,20 @@ class Command(BaseCommand):
         number = options.get("number")
         seeder = Seed.seeder()
         users = users_models.User.objects.all()
-        # query set이나 array가 있고, 어떤 곳에서 시작하거나 종료하고 싶을 때 제한하는 방법
-        rooms = rooms_models.Room.objects.all()[4:10]
+        rooms = rooms_models.Room.objects.all()
         seeder.add_entity(
-            lists_models.List,
+            reservations_models.Reservation,
             number,
             {
-                "user": lambda x: random.choice(users),
+                "status": lambda x: random.choice(["pending", "confirmed", "canceled"]),
+                "check_in": lambda x: datetime.now(),
+                "check_out": lambda x: datetime.now()
+                + timedelta(days=random.randint(3, 35)),
+                "guest": lambda x: random.choice(users),
+                "room": lambda x: random.choice(rooms),
             },
         )
 
-        created = seeder.execute()
-        cleaned = flatten(list(created.values()))
-        for pk in cleaned:
-            room_lists = lists_models.List.objects.get(pk=pk)
-            to_add = rooms[random.randint(0, 5) : random.randint(6, 30)]
-            # array가 아닌 안의 요소를 넣기 위해서
-            room_lists.rooms.add(*to_add)
+        seeder.execute()
+
         self.stdout.write(self.style.SUCCESS(f"{number} {NAME} created!"))
