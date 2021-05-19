@@ -15,7 +15,7 @@ Including another URLconf
 """
 import django
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 # 장고에서 settings를 import하고 싶을 때 사용
 from django.conf import settings
@@ -25,9 +25,9 @@ from django.conf.urls.static import static
 
 # 이름 변경하면 안됨
 urlpatterns = [
+    path("", include("core.urls", namespace="core")),
     path("admin/", admin.site.urls),
 ]
-
 
 # 만약 개발중이라면 폴더안의 파일들을 제공한다.
 if settings.DEBUG:
