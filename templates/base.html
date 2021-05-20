@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{% block page_name %}{% endblock %}| Nbnb</title>
   </head>
   <body>
-    &copy; Nbnb
+    {% include "partials/header.html" %}
+
+    <!-- block : 부모 템플렛에 자식 템플렛을 넣기 위한 방법
+    block은 자식 뎀플릿이 부모 템플릿에게 content를 집어넣을 수 있는 창(window)이다. -->
+    {% block content %}{% endblock %}
+
+    {% include "partials/footer.html" %}
   </body>
 </html>
