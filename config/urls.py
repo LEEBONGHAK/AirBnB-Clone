@@ -26,6 +26,7 @@ from django.conf.urls.static import static
 # 이름 변경하면 안됨
 urlpatterns = [
     path("", include("core.urls", namespace="core")),
+    path("rooms/", include("rooms.urls", namespace="rooms")),
     path("admin/", admin.site.urls),
 ]
 
