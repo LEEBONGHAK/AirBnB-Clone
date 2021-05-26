@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView
+from django.shortcuts import render, redirect
 from . import models
 
 # Create your views here.
@@ -23,3 +24,11 @@ class RoomDetail(DetailView):
     # object 또는 model 이름을 써도 인식됨
     # 장고는 기본적으로 DetailView를 사용하게 되면 기본적으로 url argument로 pk를 찾음
     model = models.Room
+
+
+def search(request):
+
+    city = request.GET.get("city")
+    city = str.capitalize(city)
+
+    return render(request, "rooms/search.html", context={"city": city})
