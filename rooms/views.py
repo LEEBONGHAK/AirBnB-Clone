@@ -1,6 +1,6 @@
-from django.urls import reverse
+from django.http import Http404
 from django.views.generic import ListView
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from . import models
 
 # Create your views here.
@@ -26,4 +26,6 @@ def room_detail(request, pk):
             context={"room": room},
         )
     except models.Room.DoesNotExist:
-        return redirect(reverse("core:home"))
+        # 장고가 알아서 404 페이지를 render함
+        # templatesdp 404.html을 만들고 setting에 DEBUG를 Flase로, ALLOEWD_HOSTS="*"로 설정하면 원하는 404 페이지 만들기 가능
+        raise Http404()
