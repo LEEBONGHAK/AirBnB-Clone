@@ -1,6 +1,4 @@
-from django.http import Http404
-from django.views.generic import ListView
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 from . import models
 
 # Create your views here.
@@ -17,15 +15,11 @@ class HomeView(ListView):
     context_object_name = "rooms"
 
 
-def room_detail(request, pk):
-    try:
-        room = models.Room.objects.get(pk=pk)
-        return render(
-            request,
-            "rooms/detail.html",
-            context={"room": room},
-        )
-    except models.Room.DoesNotExist:
-        # 장고가 알아서 404 페이지를 render함
-        # templatesdp 404.html을 만들고 setting에 DEBUG를 Flase로, ALLOEWD_HOSTS="*"로 설정하면 원하는 404 페이지 만들기 가능
-        raise Http404()
+class RoomDetail(DetailView):
+
+    """ RoomDetail Defination """
+
+    # 코드가 적고 많은 건 각각의 장단점이 존재함
+    # object 또는 model 이름을 써도 인식됨
+    # 장고는 기본적으로 DetailView를 사용하게 되면 기본적으로 url argument로 pk를 찾음
+    model = models.Room

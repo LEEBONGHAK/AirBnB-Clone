@@ -24,9 +24,9 @@ SECRET_KEY = "yn0^c1hz(+b+3c&ju3go780wtcxt=+wsr2z+=)hs177-=s)5n&"
 
 # 프로덕션인지 개발인지 감지할 수 있는 것
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = "*"
+ALLOWED_HOSTS = []
 
 
 # Application definition
