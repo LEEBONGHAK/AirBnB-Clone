@@ -25,7 +25,6 @@ class RoomType(AbstractItem):
 
     class Meta:
         verbose_name = "Room Types"
-        ordering = ["created"]
 
 
 class Amenity(AbstractItem):

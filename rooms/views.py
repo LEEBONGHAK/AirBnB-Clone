@@ -28,13 +28,28 @@ class RoomDetail(DetailView):
 
 
 def search(request):
- 
+
     city = request.GET.get("city", "Anywhere")
     city = str.capitalize(city)
+    country = request.GET.get("country", "KR")
+    room_type = int(request.GET.get("room_type", 0))
     room_types = models.RoomType.objects.all()
 
+    # request에서 받은 모든 정보들
+    form = {
+        "city": city,
+        "s_room_type": room_type,
+        "s_country": country,
+    }
+
+    # 데이터베이스에서 오는 정보들
+    choices = {
+        "countries": countries,
+        "room_types": room_types,
+    }
+
     return render(
-        request, 
-        "rooms/search.html", 
-        context={"city": city, "countries": countries, "room_types":room_types}
-        )
+        request,
+        "rooms/search.html",
+        context={**form, **choices},
+    )
