@@ -2,17 +2,17 @@
 
 {% block page_title %}
   Search
-{% endblock %}
+{% endblock page_title %}
 
 <!-- 뭔갈 숨기고 싶을 때 사용하는 팁 -->
 {% block search-bar %}
-{% endblock %}
+{% endblock search-bar %}
 
 {% block content %}
 
   <h2>Search!</h2>
 
-  <form form method="get" action="{% url 'rooms:search' %}">
+  <form method="get" action="{% url 'rooms:search' %}">
     {{form.as_p}}
     <button>Search</button>
   </form>
@@ -23,4 +23,5 @@
     <h3>{{room.name}}</h3>
   {% endfor %}
   
-{% endblock %}
+
+{% endblock content %}

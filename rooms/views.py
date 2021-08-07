@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from . import models, forms
 
 # Create your views here.
@@ -7,10 +8,10 @@ from . import models, forms
 # view: 요청에 답을 하는 방법
 class HomeView(ListView):
 
-    """ HomeView Defination """
+    """ HomeView Definition """
 
     model = models.Room
-    paginate_by = 10
+    paginate_by = 12
     paginate_orphans = 5
     ordering = "created"
     context_object_name = "rooms"
@@ -18,7 +19,7 @@ class HomeView(ListView):
 
 class RoomDetail(DetailView):
 
-    """ RoomDetail Defination """
+    """ RoomDetail Definition """
 
     # 코드가 적고 많은 건 각각의 장단점이 존재함
     # object 또는 model 이름을 써도 인식됨
@@ -28,7 +29,7 @@ class RoomDetail(DetailView):
 
 class SearchView(View):
 
-    """ SerachView Definition """
+    """ SerarchView Definition """
 
     def get(self, request):
         # url에 어떤 것이 있는 지 확인
@@ -90,19 +91,19 @@ class SearchView(View):
                 for facility in facilities:
                     filter_args["facilities"] = facility
 
-                rooms = models.Room.objects.filter(**filter_args)
+                qs = models.Room.objects.filter(**filter_args).order_by("-created")
+
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+
+                rooms = paginator.get_page(page)
 
                 return render(
-                    request,
-                    "rooms/search.html",
-                    context={"form": form, "rooms": rooms},
+                    request, "rooms/search.html", {"form": form, "rooms": rooms}
                 )
 
         else:
             form = forms.SearchForm()
 
-        return render(
-            request,
-            "rooms/search.html",
-            context={"form": form},
-        )
+        return render(request, "rooms/search.html", {"form": form})

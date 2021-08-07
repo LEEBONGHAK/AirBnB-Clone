@@ -21,15 +21,15 @@ class AbstractItem(core_models.TimeStampdModel):
 
 class RoomType(AbstractItem):
 
-    """ RoomType Object Definition """
+    """ RoomType Model Definition """
 
     class Meta:
-        verbose_name = "Room Types"
+        verbose_name = "Room Type"
 
 
 class Amenity(AbstractItem):
 
-    """ Amenity Object Definition """
+    """ Amenity Model Definition """
 
     # Meta Class : 모델 내의 모든 class들 안에 있는 class / 많은 것들을 설정할 수 있다.
     class Meta:
@@ -40,6 +40,8 @@ class Facility(AbstractItem):
 
     """ Facility Model Definition """
 
+    pass
+
     class Meta:
         verbose_name_plural = "Facilities"
 
@@ -49,7 +51,7 @@ class HouseRule(AbstractItem):
     """ HouseRule Model Definition """
 
     class Meta:
-        verbose_name = "House Rules"
+        verbose_name = "House Rule"
 
 
 class Photo(core_models.TimeStampdModel):
