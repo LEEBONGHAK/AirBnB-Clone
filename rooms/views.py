@@ -1,8 +1,6 @@
-from rooms.forms import SearchForm
-from django.http import request
-from django_countries import countries
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect
+from django.http import request
 from . import models, forms
 
 # Create your views here.
