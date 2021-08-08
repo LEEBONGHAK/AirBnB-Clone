@@ -24,7 +24,7 @@ class RoomType(AbstractItem):
     """ RoomType Model Definition """
 
     class Meta:
-        verbose_name = "Room Type"
+        verbose_name = "Room Types"
 
 
 class Amenity(AbstractItem):
@@ -51,7 +51,7 @@ class HouseRule(AbstractItem):
     """ HouseRule Model Definition """
 
     class Meta:
-        verbose_name = "House Rule"
+        verbose_name = "House Rules"
 
 
 class Photo(core_models.TimeStampdModel):
