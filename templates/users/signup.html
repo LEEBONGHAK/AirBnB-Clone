@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+  Sign Up
+{% endblock page_title %}
+
+<!-- 뭔갈 숨기고 싶을 때 사용하는 팁 -->
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+  <form method="POST" action="{% url 'users:signup' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Sign Up</button>
+  </form>
+
+
+{% endblock content %}
