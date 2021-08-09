@@ -1,5 +1,8 @@
+import uuid
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.mail import send_mail
 
 # Create your models here.(데이터가 보여지는 모습)
 # Model에 뭘 쓰든 장고가 알아서 form을 만들어 데이터베이스에 migration과 함꼐 이 form에 필요한 정보를 요청할 것임
@@ -42,8 +45,19 @@ class User(AbstractUser):
         choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW
     )
     superhost = models.BooleanField(default=False)
-    email_confirmed = models.BooleanField(default=False)
+    email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=120, default="", blank=True)
 
     def verify_email(self):
-        pass
+        if self.email_verified is False:
+            secret = uuid.uuid4().hex[:20]
+            self.email_secret = secret
+            send_mail(
+                "Verify Airbnb Account",
+                f"Verify account, this is your secret: {secret}",
+                settings.EMAIL_FROM,
+                [self.email],
+                fail_silently=True,
+            )
+
+        return
