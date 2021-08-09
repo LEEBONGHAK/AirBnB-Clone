@@ -3,7 +3,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.mail import send_mail
-from django.utils.html import strip_tags
+from django.utils.html import strip_tags  # html 제외한 text 형태를 제외한 형태로 return
+from django.template.loader import render_to_string  # template을 load해서 render하는 것
 
 # Create your models here.(데이터가 보여지는 모습)
 # Model에 뭘 쓰든 장고가 알아서 form을 만들어 데이터베이스에 migration과 함꼐 이 form에 필요한 정보를 요청할 것임
@@ -53,11 +54,11 @@ class User(AbstractUser):
         if self.email_verified is False:
             secret = uuid.uuid4().hex[:20]
             self.email_secret = secret
-            html_message = f'To verify account click <a href="http://127.0.0.1:8000/users/verify/{secret}">here</a>'
+            html_message = render_to_string("emails/verify_email.html", {'secret':secret})
             send_mail(
                 "Verify Airbnb Account",
                 strip_tags(html_message),
-                settings.EMAIL_FROM,        # html 제외한 text 형태를 제외한 형태로 return
+                settings.EMAIL_FROM,
                 [self.email],
                 fail_silently=True,
                 html_message=html_message,
