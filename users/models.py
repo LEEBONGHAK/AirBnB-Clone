@@ -35,6 +35,10 @@ class User(AbstractUser):
     bio = models.TextField(default="", blank=True)
     # TextField : 글자 수 제한이 없는 여러 줄을 쓸 수 있는 field
     birthdate = models.DateField(blank=True, null=True)
-    langauge = models.CharField(choices=LANGAUGE_CHOICES, max_length=2, blank=True)
-    currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True)
+    langauge = models.CharField(
+        choices=LANGAUGE_CHOICES, max_length=2, blank=True, default=LANGAUGE_KOREA
+    )
+    currency = models.CharField(
+        choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW
+    )
     superhost = models.BooleanField(default=False)
