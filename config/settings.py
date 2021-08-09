@@ -149,3 +149,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 # 디렉토리로부터 뭔가를 가져오고 싶다면 디렉토리의 하위 디렉토리로 갈 수 있게 설정 => config의 url.py에 추가!!!
 # 앞에 '/'을 추가해 주면 상대 경로에서 절대 경로로 변경
 MEDIA_URL = "/media/"
+
+# Email Configuration - using mailgun
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
