@@ -42,3 +42,18 @@ class SignUpView(FormView):
         "password": "123",
         "password1": "123",
     }
+
+    def form_valid(self, form):
+
+        # form에 문제가 없다면 유저 정보를 저장
+        form.save()
+
+        # 저장 후  해당 유저 로그인
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=email, password=password)
+
+        if user is not None:
+            login(self.request, user)
+
+        return super().form_valid(form)
