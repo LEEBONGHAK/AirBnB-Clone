@@ -10,15 +10,20 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>{% block page_title %}{% endblock page_title %}| Nbnb</title>
   </head>
-  <body>
-    <header>
-      {% include "partials/nav.html" %}
-      {% block search-bar %}
+  <body class="text-gray-800">
+    <header class="container max-w-full flex items-center justify-between px-6 h-16 border-b border-gray-400">
+      <div class="flex items-center">
+        <a href="{% url 'core:home' %}" class="mr-6">
+          <img class="w-6" src="{% static 'img/logo.png' %}">
+        </a>
+        {% block search-bar %}
         <!-- action = "/romms/search" -->
         <form form method="get" action="{% url 'rooms:search' %}">
-          <input name="city" placeholder="Search by City" type="text" />
+          <input class="border px-2 py-1 rounded-sm" name="city" placeholder="Search by City" type="text" />
         </form>
-      {% endblock %}
+        {% endblock %}
+      </div>
+      {% include "partials/nav.html" %}
     </header>
 
     <!-- block : 부모 템플렛에 자식 템플렛을 넣기 위한 방법
