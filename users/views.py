@@ -1,6 +1,6 @@
 import os
 import requests
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
@@ -227,3 +227,9 @@ def kakao_callback(request):
     except KakaoException as error:
         messages.error(request, error)
         return redirect(reverse("users:login"))
+
+
+class UserProfileView(DetailView):
+
+    model = models.User
+    context_object_name = "user_obj"

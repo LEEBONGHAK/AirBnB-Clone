@@ -5,6 +5,8 @@ from django.db import models
 from django.core.mail import send_mail
 from django.utils.html import strip_tags  # html 제외한 text 형태를 제외한 형태로 return
 from django.template.loader import render_to_string  # template을 load해서 render하는 것
+from django.shortcuts import reverse
+
 
 # Create your models here.(데이터가 보여지는 모습)
 # Model에 뭘 쓰든 장고가 알아서 form을 만들어 데이터베이스에 migration과 함꼐 이 form에 필요한 정보를 요청할 것임
@@ -59,7 +61,14 @@ class User(AbstractUser):
     superhost = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=120, default="", blank=True)
-    login_method = models.CharField(max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL)
+    login_method = models.CharField(
+        max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL
+    )
+
+    def get_absolute_url(self):
+        return reverse(
+            "users:profile", kwargs={"pk": self.pk}
+        )  # Detail안에 있는 모델을 보기 위해 url return / reverse는 url과 user profile을 반대로 해줄 것임 / admin에서 웹사이틀 무엇인가를 보고 싶다면 쓰기 좋음
 
     def verify_email(self):
         if self.email_verified is False:
