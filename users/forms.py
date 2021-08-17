@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from . import models
 
 
@@ -30,7 +30,7 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(UserCreationForm):
+class SignUpForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ("first_name", "last_name", "email")
@@ -47,7 +47,17 @@ class SignUpForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"})
     )  # password 확인
 
-    def clean_password1(self):
+    def clean_email(self):  # 중복 email 확인
+        email = self.cleaned_data.get("email")
+        try:
+            models.User.objects.get(email=email)
+            raise forms.ValidationError(
+                "That email is already taken", code="existing_user"
+            )
+        except models.User.DoesNotExist:
+            return email
+
+    def clean_password1(self):  # password 확인
         password = self.cleaned_data.get("password")
         password1 = self.cleaned_data.get("password1")
 
