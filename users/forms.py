@@ -1,11 +1,14 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from . import models
 
 
 class LoginForm(forms.Form):
 
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email"}))
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
+    )
 
     # email이나 비밀번호가 있는 field를 확인하고 싶으면 method의 이름은 clean_ 이어야 함
     # clean 으로 시작되는 method는 에러를 넣는 것뿐만 아니라 데이터를 정리도 해줌
@@ -13,7 +16,7 @@ class LoginForm(forms.Form):
     def clean(self):
 
         email = self.cleaned_data.get("email")
-        password = self.cleaned_data.get("password")
+        password = self.cleaned_data.get("passwords")
 
         try:
             user = models.User.objects.get(email=email)
@@ -27,18 +30,24 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(forms.ModelForm):
+class SignUpForm(UserCreationForm):
     class Meta:
         model = models.User
         fields = ("first_name", "last_name", "email")
+        widgets = {
+            "first_name": forms.TextInput(attrs={"placeholder": "First Name"}),
+            "last_name": forms.TextInput(attrs={"placeholder": "Last Name"}),
+            "email": forms.EmailInput(attrs={"placeholder": "Email"}),
+        }
 
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
+    )
     password1 = forms.CharField(
-        widget=forms.PasswordInput, label="Confirm Password"
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"})
     )  # password 확인
 
     def clean_password1(self):
-
         password = self.cleaned_data.get("password")
         password1 = self.cleaned_data.get("password1")
 
