@@ -32,7 +32,7 @@ form {
     @apply mb-3;
     &.has_error {
       input {
-        @apply bg-red-500 border-gray-400;
+        @apply bg-red-500 border-gray-600;
         &:focus {
           @apply border-gray-600;
         }
