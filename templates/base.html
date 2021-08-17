@@ -31,6 +31,7 @@
     block은 자식 뎀플릿이 부모 템플릿에게 content를 집어넣을 수 있는 창(window)이다. -->
     {% block content %}{% endblock %}
 
+    {% include 'partials/messages.html' %}
     {% include "partials/footer.html" %}
   </body>
 </html>

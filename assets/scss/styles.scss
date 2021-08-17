@@ -29,7 +29,7 @@ input {
 
 form {
   .input {
-    @apply mb-3;
+    @apply mb-3 w-full;
     &.has_error {
       input {
         @apply bg-red-500 border-gray-600;
