@@ -2,7 +2,7 @@ import os
 import requests
 from django.contrib.auth.views import PasswordChangeView
 from django.views.generic import FormView, DetailView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy  # reverse와 같지만 View가 필요할 때 요정하는 것
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -17,8 +17,6 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
-    success_url = reverse_lazy("core:home")  # reverse와 같지만 View가 필요할 때 요정하는 것
-    initial = {"email": "hello@world.com"}
 
     def form_valid(self, form):
         email = form.cleaned_data.get("email")
@@ -29,6 +27,13 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
             login(self.request, user)
 
         return super().form_valid(form)
+
+    def get_success_url(self):
+        next_arg = self.request.GET.get("next")
+        if next_arg is not None:
+            return next_arg
+        else:
+            return reverse("core:home")
 
 
 def log_out(request):
@@ -242,7 +247,7 @@ class UserProfileView(DetailView):
     #     return context
 
 
-class UpdateProfileView(SuccessMessageMixin, UpdateView):
+class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
 
     model = models.User
     template_name = "users/update-profile.html"
@@ -282,7 +287,12 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
         return super().form_valid(form)
 
 
-class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+class UpdatePasswordView(
+    mixins.LoggedInOnlyView, 
+    mixins.EmailLoginOnlyView, 
+    SuccessMessageMixin, 
+    PasswordChangeView
+):
 
     template_name = "users/update-password.html"
     success_message = "Password updated"
