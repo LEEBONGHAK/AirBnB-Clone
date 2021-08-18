@@ -261,6 +261,16 @@ class UpdateProfileView(UpdateView):
 
         return self.request.user
 
+    def get_form(self, form_class=None):
+
+        form = super().get_form(form_class=form_class)
+        form.fields["first_name"].widget.attrs = {"placeholder": "First Name"}
+        form.fields["last_name"].widget.attrs = {"placeholder": "Last Name"}
+        form.fields["birthdate"].widget.attrs = {"placeholder": "Birthdate"}
+        form.fields["bio"].widget.attrs = {"placeholder": "Comments"}
+
+        return form
+
     def form_valid(self, form):
 
         email = form.cleaned_date.get("email")
@@ -273,3 +283,12 @@ class UpdateProfileView(UpdateView):
 class UpdatePasswordView(PasswordChangeView):
 
     template_name = "users/update-password.html"
+
+    def get_form(self, form_class=None):
+
+        form = super().get_form(form_class=form_class)
+        form.fields["old_password"].widget.attrs = {"placeholder": "Current Password"}
+        form.fields["new_password1"].widget.attrs = {"placeholder": "New Password"}
+        form.fields["new_password2"].widget.attrs = {"placeholder": "Confirm Password"}
+
+        return form
