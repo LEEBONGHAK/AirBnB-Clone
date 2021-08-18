@@ -6,13 +6,14 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.base import (
     ContentFile,
 )  # raw content(가공 되지 않은 컨텐츠 / 0과 1같은)를 가진 파일
-from . import forms, models
+from . import forms, models, mixins
 
 # Create your views here.
-class LoginView(FormView):
+class LoginView(mixins.LoggedOutOnlyView, FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
@@ -36,7 +37,7 @@ def log_out(request):
     return redirect(reverse("core:home"))
 
 
-class SignUpView(FormView):
+class SignUpView(mixins.LoggedOutOnlyView, FormView):
 
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
@@ -241,7 +242,7 @@ class UserProfileView(DetailView):
     #     return context
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(SuccessMessageMixin, UpdateView):
 
     model = models.User
     template_name = "users/update-profile.html"
@@ -256,6 +257,7 @@ class UpdateProfileView(UpdateView):
         "langauge",
         "currency",
     )
+    success_message = "Profile updated"
 
     def get_object(self, queryset=None):  # 수정하기 원하는 객체(object)를 반환
 
@@ -273,16 +275,17 @@ class UpdateProfileView(UpdateView):
 
     def form_valid(self, form):
 
-        email = form.cleaned_date.get("email")
+        email = form.cleaned_data.get("email")
         self.object.username = email
         self.object.save()
 
         return super().form_valid(form)
 
 
-class UpdatePasswordView(PasswordChangeView):
+class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
 
     template_name = "users/update-password.html"
+    success_message = "Password updated"
 
     def get_form(self, form_class=None):
 
@@ -292,3 +295,7 @@ class UpdatePasswordView(PasswordChangeView):
         form.fields["new_password2"].widget.attrs = {"placeholder": "Confirm Password"}
 
         return form
+
+    def get_success_url(self):
+
+        return self.request.user.get_absolute_url()
