@@ -224,5 +224,6 @@ class CreateRoomView(user_mixins.LoggedInOnlyView, FormView):
         room = form.save(self.request.user)
         room.host = self.request.user
         room.save()
+        form.save_m2m()  # many-to-many field에 저장하기 위해 꼭 필요
         messages.success(self.request, "Room Created")
         return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))
