@@ -5,6 +5,7 @@ from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse_lazy  # reverse와 같지만 View가 필요할 때 요정하는 것
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.base import (
@@ -288,10 +289,10 @@ class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView
 
 
 class UpdatePasswordView(
-    mixins.LoggedInOnlyView, 
-    mixins.EmailLoginOnlyView, 
-    SuccessMessageMixin, 
-    PasswordChangeView
+    mixins.LoggedInOnlyView,
+    mixins.EmailLoginOnlyView,
+    SuccessMessageMixin,
+    PasswordChangeView,
 ):
 
     template_name = "users/update-password.html"
@@ -309,3 +310,13 @@ class UpdatePasswordView(
     def get_success_url(self):
 
         return self.request.user.get_absolute_url()
+
+
+@login_required
+def switch_hosting(request):
+
+    try:
+        del request.session["is_hosting"]
+    except KeyError:
+        request.session["is_hosting"] = True
+    return redirect(reverse("core:home"))
