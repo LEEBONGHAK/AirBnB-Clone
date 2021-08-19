@@ -1,7 +1,4 @@
 from django import forms
-from django.contrib.messages.api import success
-from django.db.models import fields
-from django.http import request
 from django_countries.fields import CountryField
 from . import models
 
@@ -34,7 +31,7 @@ class SearchForm(forms.Form):
     )
 
 
-class CreatePhotoForm(forms.Modelform):
+class CreatePhotoForm(forms.ModelForm):
     class Meta:
         model = models.Photo
         fields = (
