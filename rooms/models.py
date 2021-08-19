@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # reverse는 url name을 필요로 하는 함수이고 그 url을 return할 것임
@@ -124,8 +125,12 @@ class Room(core_models.TimeStampdModel):
         return round(all_ratings / num_reviews, 2)
 
     def first_photo(self):
-        (photo,) = self.photos.all()[:1]
-        return photo.file.url
+
+        try:
+            (photo,) = self.photos.all()[:1]
+            return photo.file.url
+        except ValueError:
+            return None
 
     def get_next_four_photos(self):
         photos = self.photos.all()[1:5]

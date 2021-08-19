@@ -206,7 +206,23 @@ class AddPhotoView(user_mixins.LoggedInOnlyView, FormView):
     form_class = forms.CreatePhotoForm
 
     def form_valid(self, form):
+
         pk = self.kwargs.get("pk")
         form.save(pk)
         messages.success(self.request, "Photo Upload")
         return redirect(reverse("rooms:photos", kwargs={"pk": pk}))
+
+
+class CreateRoomView(user_mixins.LoggedInOnlyView, FormView):
+
+    model = models.Room
+    form_class = forms.CreateRoomForm
+    template_name = "rooms/room_create.html"
+
+    def form_valid(self, form):
+
+        room = form.save(self.request.user)
+        room.host = self.request.user
+        room.save()
+        messages.success(self.request, "Room Created")
+        return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))
