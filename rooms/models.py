@@ -134,9 +134,12 @@ class Room(core_models.TimeStampdModel):
             return None
 
     def get_next_four_photos(self):
+
         photos = self.photos.all()[1:5]
         return photos
 
     def get_calendars(self):
-        calendar = Calendar(2021, 8)
-        return False
+
+        this_month = Calendar(2021, 8)
+        next_month = Calendar(2021, 9)
+        return [this_month, next_month]
