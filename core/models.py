@@ -1,8 +1,7 @@
 from django.db import models
+from .import managers
 
 # Create your models here.
-
-
 class TimeStampdModel(models.Model):
 
     """ Time Stamped Model """
@@ -11,6 +10,7 @@ class TimeStampdModel(models.Model):
     # auto_now_add: 값이 True일 경우 model을 생성할 때마다 수시로 업데이트 됨
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    objects = managers.CustomModelManager()
 
     # 이 모델이 데이터베이스에 들어가지 않게 하기 위해서
     class Meta:
