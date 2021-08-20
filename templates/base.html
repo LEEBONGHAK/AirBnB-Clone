@@ -1,5 +1,6 @@
 <!-- 매 번 도메인을 신경쓰지 않기 위해 -->
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +22,7 @@
         {% block search-bar %}
         <!-- action = "/romms/search" -->
         <form form method="get" action="{% url 'rooms:search' %}" class="w-9/12">
-          <input class="search-box font-medium text-gray-900 placeholder-gray-600 border px-5 py-2 w-full rounded-sm shadow-md hover:shadow-lg focus:outline-none" name="city" placeholder="Search by City" type="text" />
+          <input class="search-box font-medium text-gray-900 placeholder-gray-600 border px-5 py-2 w-full rounded-sm shadow-md hover:shadow-lg focus:outline-none" name="city" placeholder="{% trans 'Search by City' %}" type="text" />
         </form>
         {% endblock %}
       </div>
