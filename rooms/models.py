@@ -1,3 +1,5 @@
+from datetime import time
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -140,6 +142,14 @@ class Room(core_models.TimeStampdModel):
 
     def get_calendars(self):
 
-        this_month = Calendar(2021, 8)
-        next_month = Calendar(2021, 9)
+        now = timezone.now()
+        this_year = now.year
+        this_month = now.month
+        next_month = this_month + 1
+
+        if this_month == 12:
+            next_month = 1
+        
+        this_month = Calendar(this_year, this_month)
+        next_month = Calendar(this_year, next_month)
         return [this_month, next_month]
