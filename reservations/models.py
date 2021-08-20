@@ -1,9 +1,10 @@
+import datetime
 from django.db import models
 from django.utils import timezone
 from core import models as core_models
 
 # Create your models here.
-class BoodedDay(core_models.TimeStampdModel):
+class BookedDay(core_models.TimeStampdModel):
 
     day = models.DateField()
     reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE)
@@ -57,12 +58,17 @@ class Reservation(core_models.TimeStampdModel):
 
     def save(self, *args, **kwargs):
 
-        if True:
+        if self.pk is None:
             start = self.check_in
             end = self.check_out
             difference = end - start
-            existing_booked_day = BoodedDay.objects.filter(
-                day_range=(satr, end)
-            ).exists()
-
+            existing_booked_day = BookedDay.objects.filter(
+                reservation__room=self.room, day__range=(start, end)
+            ).exists()  # BookedDay가 존재하는 지 확인
+            if not existing_booked_day:
+                super().save(*args, **kwargs)
+                for i in range(difference.days + 1):
+                    day = start + datetime.timedelta(days=i)
+                    BookedDay.objects.create(day=day, reservation=self)
+                return
         return super().save(*args, **kwargs)

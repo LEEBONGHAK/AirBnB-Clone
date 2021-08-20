@@ -20,7 +20,7 @@ class ReservationAdmin(admin.ModelAdmin):
     list_filter = ("status",)
 
 
-@admin.register(models.BoodedDay)
+@admin.register(models.BookedDay)
 class BookedDayAdmin(admin.ModelAdmin):
 
     """ Booded Day Admin Definition """
