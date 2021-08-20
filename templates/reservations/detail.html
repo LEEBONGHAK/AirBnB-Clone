@@ -17,7 +17,7 @@
                 <span class="
                 {% if reservation.status == 'pending' %}
                     text-yellow-600
-                {% elif reservaion.status == 'canceled' %}
+                {% elif reservaion.status == 'cancel' %}
                     text-red-600
                 {% else %}
                     text-green-500
@@ -38,11 +38,11 @@
                 </div>
             </div>
             <div class="py-10 px-5">
-                {% if reservation.status == 'pending' %}                
-                    <a href="#" class="btn-link block px-3 mb-5">Cancel Reservation</a>
+                {% if reservation.status == 'pending' %}
                     {% if reservation.room.host == user %}
-                        <a href="#" class="btn-link block px-5">Confirm Reservation</a>
+                        <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn-link block px-5">Confirm Reservation</a>
                     {% endif %}
+                    <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn-link block px-3 mb-5">Cancel Reservation</a>
                 {% endif %}
             </div>
         </div>
