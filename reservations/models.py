@@ -14,6 +14,9 @@ class BookedDay(core_models.TimeStampdModel):
         verbose_name = "Booked Day"
         verbose_name_plural = "Booked Days"
 
+    def __str__(self):
+        return str(self.day)
+
 
 class Reservation(core_models.TimeStampdModel):
 
@@ -65,6 +68,7 @@ class Reservation(core_models.TimeStampdModel):
             existing_booked_day = BookedDay.objects.filter(
                 reservation__room=self.room, day__range=(start, end)
             ).exists()  # BookedDay가 존재하는 지 확인
+
             if not existing_booked_day:
                 super().save(*args, **kwargs)
                 for i in range(difference.days + 1):

@@ -25,4 +25,7 @@ class BookedDayAdmin(admin.ModelAdmin):
 
     """ Booded Day Admin Definition """
 
-    pass
+    list_display = (
+        "day",
+        "reservation",
+    )
