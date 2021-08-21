@@ -3,7 +3,7 @@
 {% load sexy_capitals %}  
 <!-- django tag를 load하기 위해 -->
 {% load is_booked %}
-{% load i18n %}
+{% load on_favs i18n %}
 
 {% block page_title %}
   {{room.name}}
@@ -32,7 +32,12 @@
           <span class="mt-2 text-gray-500">{{room.host.first_name}}</span>
         </a>
       </div>
-      <a href="{% url 'lists:save-room' room.pk %}" class="btn-link block mb-10 w-1/3">{% trans 'Save to Favorites' %}</a>
+      {% on_fav room as on_fav_boolean %}
+      {% if on_fav_boolean %}
+        <a href="{% url 'lists:save-room' room.pk %}" class="block mb-10 w-1/3">{% trans 'Remove from Favorites' %}</a>
+      {% else %}
+        <a href="{% url 'lists:save-room' room.pk %}" class="block mb-10 w-1/3">{% trans 'Save to Favorites' %}</a>
+      {% endif %}
       <div class="flex border-section">
         <span class="mr-5 font-light">{{room.room_type}}</span>
         <span class="mr-5 font-light">{{room.beds}} bed{{room.beds|pluralize}}</span>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-21 13:45+0900\n"
+"POT-Creation-Date: 2021-08-21 14:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,9 +58,15 @@ msgstr "Iniciar Sesión"
 msgid "Sign Up"
 msgstr "Inscribirse"
 
-#: templates/rooms/room_detail.html:35
+#: templates/rooms/room_detail.html:37
+#, fuzzy
+#| msgid "Save to Favorites"
 msgid "Save to Favorites"
 msgstr "Guardar en Favorito"
+
+#: templates/rooms/room_detail.html:39
+msgid "Remove from Favorites"
+msgstr "Eliminar de Favorito"
 
 #: templates/rooms/room_list.html:26
 #, python-format

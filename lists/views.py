@@ -8,7 +8,7 @@ def save_room(request, room_pk):
     if room is not None:
 
         the_list, _ = models.List.objects.get_or_create(
-            user=request.user, name="My favorite Rooms"
+            user=request.user, name="My Favorite Rooms"
         )
         the_list.rooms.add(room)
 
