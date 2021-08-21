@@ -1,5 +1,6 @@
 <!-- class based view를 이용 시 임의의 파일명을 사용하지 못한다. -->
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block page_title %}
   Home
@@ -10,7 +11,6 @@
   <div class="container mx-auto pb-10">
     <div class="rounded-xl bg-gray-800 -mx-40 h-50vh mb-24 bg-center" style="background-image: url(https://images.unsplash.com/photo-1628706648528-c39f4fc5522c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80);">
     </div>
-    
     <div class="flex flex-wrap -mx-40 mb-10">
       {% for room in rooms %}
         {% include 'mixins/room_card.html' with room=room %}
@@ -21,12 +21,10 @@
         <a href="?page={{page_obj.previous_page_number}}" class="text-green-500">
           <i class="fas fa-arrow-left fa-lg"></i>
         </a>
-      {% endif %}
-  
+      {% endif %}  
       <span class="mx-3 font-medium text-lg">
-        Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+        {% blocktrans with current_page=page_obj.number total_page=page_obj.paginator.num_pages %}Page {{current_page}} of {{total_page}}{% endblocktrans %}
       </span>
-  
       {% if page_obj.has_next %}
         <a href="?page={{page_obj.next_page_number}}" class="text-green-500">
           <i class="fas fa-arrow-right fa-lg"></i>
@@ -34,8 +32,6 @@
       {% endif %}
     </div>
   </div>
-
-
 
 {% endblock %}
 

@@ -1,4 +1,5 @@
 import uuid
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -19,15 +20,15 @@ class User(AbstractUser):
     GENDER_OTHER = "other"
 
     GENDER_CHOICES = (
-        (GENDER_MALE, "Male"),
-        (GENDER_FEMALE, "Female"),
-        (GENDER_OTHER, "Other"),
+        (GENDER_MALE, _("Male")),
+        (GENDER_FEMALE, _("Female")),
+        (GENDER_OTHER, _("Other")),
     )  # 튜플
 
     LANGAUGE_ENGLISH = "en"
     LANGAUGE_KOREA = "kr"
 
-    LANGAUGE_CHOICES = ((LANGAUGE_ENGLISH, "English"), (LANGAUGE_KOREA, "Korean"))
+    LANGAUGE_CHOICES = ((LANGAUGE_ENGLISH, _("English")), (LANGAUGE_KOREA, _("Korean")))
 
     CURRENCY_USD = "usd"
     CURRENCY_KRW = "krw"
@@ -46,14 +47,20 @@ class User(AbstractUser):
 
     avatar = models.ImageField(upload_to="avatars", blank=True)
     # null은 데이터베이스에서 사용되는 것 / blank는 form에서 사용되는 빈값
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
+    gender = models.CharField(
+        _("gender"), choices=GENDER_CHOICES, max_length=10, blank=True
+    )
     # CharField(max_length, default) : argumentrk가 하나만 필요 => 글자 수 제한이 있는 1줄 짜리 field
     # choices를 주어 선택하게 만들 수 도 있음 이는 form에 변화를 준 것이기 때문에 데이터베이스에 영향이 가지 않는다.
-    bio = models.TextField(default="", blank=True)
+    bio = models.TextField(_("bio"), default="", blank=True)
     # TextField : 글자 수 제한이 없는 여러 줄을 쓸 수 있는 field
     birthdate = models.DateField(blank=True, null=True)
     langauge = models.CharField(
-        choices=LANGAUGE_CHOICES, max_length=2, blank=True, default=LANGAUGE_KOREA
+        _("language"),
+        choices=LANGAUGE_CHOICES,
+        max_length=2,
+        blank=True,
+        default=LANGAUGE_KOREA,
     )
     currency = models.CharField(
         choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW
@@ -78,7 +85,7 @@ class User(AbstractUser):
                 "emails/verify_email.html", {"secret": secret}
             )
             send_mail(
-                "Verify Airbnb Account",
+                _("Verify Airbnb Account"),
                 strip_tags(html_message),
                 settings.EMAIL_FROM,
                 [self.email],
