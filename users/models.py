@@ -5,8 +5,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.mail import send_mail
 from django.utils.html import strip_tags  # html 제외한 text 형태를 제외한 형태로 return
-from django.template.loader import render_to_string  # template을 load해서 render하는 것
 from django.shortcuts import reverse
+from django.template.loader import render_to_string  # template을 load해서 render하는 것
+from core import managers as core_managers
 
 
 # Create your models here.(데이터가 보여지는 모습)
@@ -71,6 +72,7 @@ class User(AbstractUser):
     login_method = models.CharField(
         max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL
     )
+    objects = core_managers.CustomModelManager()
 
     def get_absolute_url(self):
         return reverse(
