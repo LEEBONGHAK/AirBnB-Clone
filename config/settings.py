@@ -20,13 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "yn0^c1hz(+b+3c&ju3go780wtcxt=+wsr2z+=)hs177-=s)5n&"
+SECRET_KEY = os.environ.get("DJANGO_SECRET")
 
 # 프로덕션인지 개발인지 감지할 수 있는 것
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".elasticbeanstalk.com"]
 
 
 # Application definition
