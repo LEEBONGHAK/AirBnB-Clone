@@ -24,7 +24,7 @@ SECRET_KEY = "yn0^c1hz(+b+3c&ju3go780wtcxt=+wsr2z+=)hs177-=s)5n&"
 
 # 프로덕션인지 개발인지 감지할 수 있는 것
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG"))
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -92,7 +92,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if DEBUG:
+if DEBUG is False:
 
     DATABASES = {
         "default": {
